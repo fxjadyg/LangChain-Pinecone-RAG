@@ -1,67 +1,39 @@
-<h1>Retrieval Augmented Generation (RAG) with Streamlit, LangChain and Pinecone</h1>
+# ⚡ RAG Core // Production PDF Intelligence Terminal
 
-<h2>Watch the full tutorial on my YouTube Channel</h2>
-<div>
-    &nbsp;<br>
-<a href="https://www.youtube.com/watch?v=A3WKdt_MNZQ">
-    <img src="https://github.com/ThomasJanssen-tech/LangChain-Pinecone-RAG/blob/main/thumbnail.png" alt="Thomas Janssen Youtube" width="200"/>
-</a>
-    &nbsp;<br>
-     &nbsp;<br>
-</div>
+An enterprise-grade Retrieval-Augmented Generation (RAG) conversational pipeline built with **Streamlit**, **LangChain**, **Pinecone Vector Database**, and **Google Gemini LLMs**. Designed to ingest complex PDF documents, perform high-dimensional vector search, and stream real-time, context-grounded answers with exact page citations.
 
-<h2>Prerequisites</h2>
-<ul>
-  <li>Python 3.11+</li>
-</ul>
+---
 
-<h2>Installation</h2>
-1. Clone the repository:
+## 🚀 Key Features
 
-```
-git clone https://github.com/ThomasJanssen-tech/LangChain-Pinecone-RAG.git
-cd LangChain Pinecone RAG
-```
+- **⚡ Fast PDF Processing**: High-speed document parsing using `PyMuPDF` (`fitz`) with automatic batch vector embedding and real-time indexing progress tracking.
+- **🌊 Real-Time Token Streaming**: Instant response output powered by `st.write_stream` for minimum Time To First Token (TTFT).
+- **🧠 History-Aware Conversational Search**: Automatically rephrases follow-up queries using past conversation context to preserve multi-turn retrieval precision.
+- **🎯 Multi-Stage Context Reranking**: Optional Gemini LLM reranking stage to filter candidate chunks from Pinecone before response synthesis.
+- **📄 Page-Level Source Citations**: Displays source document filenames and exact page numbers for transparent fact-checking.
+- **🛡️ Dynamic Model & Quota Controls**: Sidebar controls to switch active Gemini models (`gemini-3.8-flash`, `gemini-3.6-flash`, `gemini-3.5-flash-lite`) and toggle execution passes to optimize latency and API usage.
+- **💻 Cyber-Terminal Theme**: Custom CSS injected UI featuring live system status indicators and animated tech badges.
 
-2. Create a virtual environment
+---
 
-```
-python -m venv venv
-```
+## 🛠️ Tech Stack
 
-3. Activate the virtual environment
+- **Frontend & UI**: Streamlit (Custom Cyber-Terminal Theme)
+- **Framework & Orchestration**: LangChain
+- **Vector Store**: Pinecone Index (768 Dimensions)
+- **LLMs & Embeddings**: Google Gemini (`gemini-embedding-2-preview`, `gemini-3.8-flash`, `gemini-3.6-flash`)
+- **Document Engine**: PyMuPDF (`fitz`)
 
-```
-venv\Scripts\Activate
-(or on Mac): source venv/bin/activate
-```
+---
 
-4. Install libraries
+## 📁 Project Structure
 
-```
-pip install -r requirements.txt
-```
-
-5. Create accounts
-
-- Create a free account on Pinecone: https://www.pinecone.io/
-- Create an API key for OpenAI: https://platform.openai.com/api-keys
-
-6. Add API keys to .env file
-
-- Rename .env.example to .env
-- Add the API keys for Pinecone and OpenAI to the .env file
-
-<h3>Executing the scripts</h3>
-
-1. Open a terminal in VS Code
-
-2. Execute the following command:
-
-```
-python sample_ingestion.py
-python sample_retrieval.py
-python ingestion.py
-python retrieval.py
-streamlit run chatbot_rag.py
-```
+```text
+LangChain-Pinecone-RAG/
+├── chatbot_rag.py           # Main Streamlit Cyber-Terminal App
+├── ingestion.py             # CLI Document Ingestion Script
+├── retrieval.py             # Standalone Vector Query Script
+├── requirements.txt         # Cleaned Project Dependencies
+├── readme.md                # Project Documentation
+├── .gitignore               # Git Exclusions (.env, venv, temporary uploads)
+└── .env                     # Environment Keys (API Keys)

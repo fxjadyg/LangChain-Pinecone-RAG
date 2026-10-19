@@ -3,26 +3,33 @@ import os
 from dotenv import load_dotenv
 
 # import pinecone
-from pinecone import Pinecone, ServerlessSpec
+from pinecone import Pinecone
 
 # import langchain
 from langchain_pinecone import PineconeVectorStore
-from langchain_openai import OpenAIEmbeddings
-from langchain_core.documents import Document
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 load_dotenv()
+
+# Handle API key mapping for Gemini
+gemini_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+if gemini_key:
+    os.environ["GOOGLE_API_KEY"] = gemini_key
 
 # initialize pinecone database
 pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
 
 # set the pinecone index
-
 index_name = os.environ.get("PINECONE_INDEX_NAME") 
 index = pc.Index(index_name)
 
-# initialize embeddings model + vector store
+# initialize Gemini embeddings model (768 dimensions matching your Pinecone index)
+embeddings = GoogleGenerativeAIEmbeddings(
+    model="gemini-embedding-2-preview",
+    output_dimensionality=768,
+    google_api_key=gemini_key
+)
 
-embeddings = OpenAIEmbeddings(model="text-embedding-3-large",api_key=os.environ.get("OPENAI_API_KEY"))
 vector_store = PineconeVectorStore(index=index, embedding=embeddings)
 
 # retrieval
